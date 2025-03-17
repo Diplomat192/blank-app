@@ -1,0 +1,13 @@
+[phases.setup]
+aptPkgs = ["python3", "gcc"]
+
+[phases.install]
+cmds = [
+  # First, force-uninstall any GUI-based OpenCV
+  "python -m venv --copies /opt/venv && . /opt/venv/bin/activate && pip uninstall -y opencv-python opencv-contrib-python",
+  # Then install your requirements (which has opencv-python-headless)
+  "python -m venv --copies /opt/venv && . /opt/venv/bin/activate && pip install --no-cache-dir -r requirements.txt"
+]
+
+[phases.start]
+cmd = "streamlit run streamlit_app.py --server.port $PORT --server.address 0.0.0.0"
